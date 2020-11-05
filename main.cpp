@@ -32,21 +32,33 @@ struct Node
 int main(){
     std::vector<Node> graph;
 
+    // Create nodes
     Node n0(0);
     Node n1(1);
     Node n2(2);
+    Node n3(3);
+    Node n4(4);
+    Node n5(5);
+    Node n6(6);
 
-    n0.connect(1.5, &n1);
-    n0.connect(3.1, &n2);
+    // Connect nodes
+    n0.connect(0, &n1);
+    n0.connect(0, &n2);
 
-    Node new_node(123);
+    n1.connect(0, &n3);
+    n1.connect(0, &n4);
+    
+    n2.connect(0, &n5);
+    n2.connect(0, &n6);
 
-    n0.connect(5.6, &new_node);
-
+    // Add nodes to graph
     graph.push_back(n0);
     graph.push_back(n1);
     graph.push_back(n2);
-    graph.push_back(new_node);
+    graph.push_back(n3);
+    graph.push_back(n4);
+    graph.push_back(n5);
+    graph.push_back(n6);
 
     return 0;
 }
