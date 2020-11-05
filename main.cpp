@@ -5,7 +5,7 @@
 struct Edge
 {
     float weight;
-    Node* next;
+    struct Node* next;
 
     Edge(float w, Node* n) {
         weight = weight;
@@ -17,6 +17,7 @@ struct Node
 {
     int value;
     std::vector<Edge> edges;
+    bool visited = false; // Avoid getting caught in infinite cycles
 
     Node(float v) {
         value = v;
@@ -28,12 +29,22 @@ struct Node
     }
 };
 
+void dfs(Node* node) {
+    std::cout << node->value << std::endl;
+    node->visited = true;
+
+    for (int i = 0; i < node->edges.size(); i++) {
+        if (!node->edges[i].next->visited) {
+            dfs(node->edges[i].next);
+        }
+    }
+}
 
 int main(){
     std::vector<Node> graph;
 
     // Create nodes
-    Node n0(0);
+    Node n0(0); // ROOT
     Node n1(1);
     Node n2(2);
     Node n3(3);
@@ -59,6 +70,13 @@ int main(){
     graph.push_back(n4);
     graph.push_back(n5);
     graph.push_back(n6);
+
+    // Experiments with bidirectional
+
+    n3.connect(0, &n1);
+
+    // DFS - Depth First Search
+    dfs(&n0);
 
     return 0;
 }
