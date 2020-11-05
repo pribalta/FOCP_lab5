@@ -40,11 +40,30 @@ void dfs(Node* node) {
     }
 }
 
+
+void bfs(Node* node) {
+    std::vector<Node*> todo{node};
+
+    while(!todo.empty()) {
+        Node* next_node = todo[0];
+        std::cout << next_node->value << std::endl;
+        next_node->visited = true;
+
+        todo.erase(todo.begin()); // Delete first element in vector
+
+        for (int i = 0; i < next_node->edges.size(); i++) {
+            if (!next_node->edges[i].next->visited) {
+                todo.push_back(next_node->edges[i].next);
+            }
+        }
+    }
+}
+
 int main(){
     std::vector<Node> graph;
 
     // Create nodes
-    Node n0(0); // ROOT
+    Node n0(0);
     Node n1(1);
     Node n2(2);
     Node n3(3);
@@ -76,7 +95,7 @@ int main(){
     n3.connect(0, &n1);
 
     // DFS - Depth First Search
-    dfs(&n0);
+    bfs(&n0);
 
     return 0;
 }
