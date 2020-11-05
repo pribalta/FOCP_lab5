@@ -2,6 +2,36 @@
 #include <fstream>
 #include <vector>
 
+std::vector<std::string> read_file(std::string path) {
+
+    std::ifstream source(path);
+
+    std::vector<std::string> lines;
+    std::string tmp;
+
+    if (source.is_open()) {
+
+        while(getline(source, tmp)) {
+            lines.push_back(tmp);
+        }
+        source.close();
+    }
+
+    return lines;
+}
+
+void write_file(std::string path, std::vector<std::string>& lines) {
+        std::ofstream destination(path);
+
+    if (destination.is_open()) {
+        for(int i = 0; i < lines.size(); i++) {
+            destination << lines[i] << "\n";
+        }
+
+        destination.close();
+    }
+}
+
 int main(int argc, char *argv[]){
     std::cout << "Value in argc: " << argc << std::endl;
 
@@ -20,30 +50,11 @@ int main(int argc, char *argv[]){
     std::cout << "Input file: " << input_file << std::endl;
     std::cout << "Output file: " << output_file << std::endl;
 
-    std::ifstream source(input_file);
-
-    std::vector<std::string> lines;
-    std::string tmp;
-
-    if (source.is_open()) {
-
-        while(getline(source, tmp)) {
-            lines.push_back(tmp);
-        }
-        source.close();
-    }
+    std::vector<std::string> lines = read_file(input_file);
 
     // Do whatever your program has to do
+
+    write_file(output_file, lines);
     
-    std::ofstream destination(output_file);
-
-    if (destination.is_open()) {
-        for(int i = 0; i < lines.size(); i++) {
-            destination << lines[i] << "\n";
-        }
-
-        destination.close();
-    }
-
     return 0;
 }
